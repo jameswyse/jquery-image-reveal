@@ -1,0 +1,18 @@
+{
+  "immed": true,
+  "newcap": true,
+  "undef": true,
+  "eqeqeq": true,
+  "bitwise": true,
+  "laxcomma": true,
+  "latedef": true,
+  "quotmark": 'single',
+  "unused": true,
+  "strict": false,
+  "trailing": true,
+  "browser": true,
+  "jquery": true,
+  "es5": true,
+  "esnext": false,
+  "node": true
+}

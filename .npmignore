@@ -1,0 +1,8 @@
+.editorconfig
+.gitattributes
+.gitignore
+.jshintrc
+.travis.yml
+Gruntfile.js
+src
+imageReveal.jquery.json

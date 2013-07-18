@@ -1,0 +1,58 @@
+{
+  "name": "jquery-image-reveal",
+  "description": "jQuery Image Reveal - A Simple Before/After Image Viewer",
+  "version": "0.0.1",
+  "homepage": "http://github.com/lemoncreative/jquery-image-reveal",
+  "author": {
+    "name": "Lemon Creative",
+    "url": "http://www.lemoncreative.net",
+    "email": "hello@lemoncreative.net"
+  },
+  "contributors": [
+    {
+      "name": "James Wyse",
+      "email": "james@jameswyse.net"
+    }
+  ],
+  "licenses": [
+    {
+      "type": "MIT",
+      "url": "http://github.com/lemoncreative/jquery-image-reveal/blob/master/LICENSE-MIT"
+    }
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/lemoncreative/jquery-image-reveal.git"
+  },
+  "bugs": {
+    "url": "http://github.com/lemoncreative/jquery-image-reveal/issues"
+  },
+  "keywords": [
+    "jquery",
+    "image",
+    "reveal",
+    "compare",
+    "before",
+    "after",
+    "slider"
+  ],
+  "scripts": {
+    "build": "grunt build",
+    "release": "grunt release",
+    "test": "grunt test",
+    "start": "grunt"
+  },
+  "engines": {
+    "node": ">= 0.8.0"
+  },
+  "dependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-uglify": "~0.2.2",
+    "grunt-contrib-cssmin": "~0.6.1",
+    "grunt-contrib-compress": "~0.5.2",
+    "grunt-express": "~1.0.0-beta",
+    "grunt-contrib-jshint": "~0.6.0",
+    "grunt-contrib-watch": "~0.4.4",
+    "grunt-contrib-copy": "~0.4.1"
+  }
+}
