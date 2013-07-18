@@ -92,17 +92,9 @@ module.exports = function(grunt) {
 
   // File Watcher
   config.watch = {
-    js: {
-      files: ['Gruntfile.js', 'src/**/*.js'],
-      tasks: ['jshint', 'uglify']
-    },
-    css: {
-      files: ['src/**/*.css'],
-      tasks: ['cssmin']
-    },
-    html: {
-      files: ['demo/**/*.html'],
-      tasks: []
+    all: {
+      files: ['Gruntfile.js', 'src/**/*.*'],
+      tasks: ['build']
     },
     options: {
       livereload: true
