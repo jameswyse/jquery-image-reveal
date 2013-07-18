@@ -40,98 +40,101 @@
     else if(options.captionChange < 0) options.captionChange = 0;
 
     // Update - Moves the overlay and drag bar to the new location and displays the correct caption.
-    function update(width) {
+    function update(width, id) {
       width = width - (options.barWidth / 2);
       if(width > options.paddingLeft && width <= options.width - (options.paddingRight + options.barWidth)) {
-        $el.drag.css({ left: width });
-        $el.overlay.width(width);
+        $el[id].drag.css({ left: width });
+        $el[id].overlay.width(width);
       }
       if(options.showCaption) {
-        if (width > options.width * options.captionChange) $el.caption.text($el.before.attr('title'));
-        else $el.caption.text($el.after.attr('title'));
+        if (width > options.width * options.captionChange) $el[id].caption.text($el[id].before.attr('title'));
+        else $el[id].caption.text($el[id].after.attr('title'));
       }
     }
 
     // handleEvent - Calls 'update' if the event is valid
     function handleEvent(e) {
-      if(!dragging && e.type !== 'click') return false;
+      var id = $(this).data('imageRevealID');
 
+      if(!dragging && e.type !== 'click') return false;
       var position;
 
       if(e.originalEvent && e.originalEvent.changedTouches) {
         position = e.originalEvent.changedTouches[0].pageX;
       } else position = e.pageX;
 
-      var offset = position - $el.overlay.offset().left;
+      var offset = position - $el[id].overlay.offset().left;
 
       if(offset < 0) offset = 0;
       if(offset > options.width) offset = options.width;
 
-      update(offset);
+      update(offset, id);
       return false;
     }
 
-    return this.each(function () {
+    return this.each(function (i) {
+      $el[i] = {};
+
       // Container
-      $el.container = $(this).addClass('imageReveal');
+      $el[i].container = $(this).addClass('imageReveal').data('imageRevealID', i);
 
       // Before Image
-      $el.before = $el.container.children('img').first()
+      $el[i].before = $el[i].container.children('img').first()
         .width(options.width)
         .height(options.height)
         .hide();
 
       // After Image
-      $el.after  = $el.before.next()
+      $el[i].after  = $el[i].before.next()
         .width(options.width)
         .height(options.height)
         .hide();
 
       // Set up container
-      $el.container
+      $el[i].container
         .width(options.width)
         .height(options.height)
         .css({ overflow: 'hidden', position: 'relative' })
         .append('<div class="imageReveal-overlay"></div>')
         .append('<div class="imageReveal-background"></div>')
         .append('<div class="imageReveal-drag"></div>')
-        .append('<div class="imageReveal-caption">' + $el.before.attr('title') + '</div>');
+        .append('<div class="imageReveal-caption">' + $el[i].before.attr('title') + '</div>');
 
       // Background
-      $el.bg = $el.container.children('.imageReveal-background')
+      $el[i].bg = $el[i].container.children('.imageReveal-background')
         .width(options.width)
         .height(options.height)
         .css({
-            'background-image': 'url(' + $el.after.attr('src') + ')'
+            'background-image': 'url(' + $el[i].after.attr('src') + ')'
           , 'background-size': options.width + 'px ' + options.height + 'px'
         });
 
       // Caption
-      $el.caption = options.showCaption ? $el.container.children('.imageReveal-caption').show() : $el.container.children('.imageReveal-caption').hide();
+      $el[i].caption = options.showCaption ? $el[i].container.children('.imageReveal-caption').show() : $el[i].container.children('.imageReveal-caption').hide();
 
       // Overlay
-      $el.overlay = $el.container.children('.imageReveal-overlay')
+      $el[i].overlay = $el[i].container.children('.imageReveal-overlay')
         .width(options.width)
         .height(options.height)
         .css({
-            'background-image': 'url(' + $el.before.attr('src') + ')'
+            'background-image': 'url(' + $el[i].before.attr('src') + ')'
           , 'background-size': options.width + 'px ' + options.height + 'px'
         })
         .animate({ width: options.width - options.startPosition - options.barWidth});
 
       // Drag Bar
-      $el.drag = $el.container.children('.imageReveal-drag')
+      $el[i].drag = $el[i].container.children('.imageReveal-drag')
         .width(options.barWidth)
         .height(options.height)
         .animate({ right: options.startPosition })
         .on('mousedown touchstart', function() {
           dragging = true;
-          $el.drag.addClass('dragging');
+          $el[i].drag.addClass('dragging');
           return false;
         })
         .on('mouseup touchend touchcancel', function() {
           dragging = false;
-          $el.drag.removeClass('dragging');
+          $el[i].drag.removeClass('dragging');
           return false;
         });
 
@@ -141,7 +144,7 @@
         if(!dragging) return;
 
         dragging = false;
-        $el.drag.removeClass('dragging');
+        $el[i].drag.removeClass('dragging');
       });
 
     }).on('mousemove click touchmove', handleEvent);
