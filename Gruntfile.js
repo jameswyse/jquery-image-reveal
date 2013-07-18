@@ -159,4 +159,5 @@ module.exports = function(grunt) {
   grunt.registerTask('build', ['jshint', 'uglify', 'cssmin', 'copy']);
   grunt.registerTask('release', ['build', 'compress']);
   grunt.registerTask('default', ['build', 'express', 'watch']);
+  grunt.registerTask('test', ['build']);
 };
