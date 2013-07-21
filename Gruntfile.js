@@ -66,7 +66,10 @@ module.exports = function(grunt) {
       browser: true,
       jquery: true,
       esnext: false,
-      node: false
+      node: false,
+      globals: {
+        'console': true
+      }
     },
     grunt: {
       src: ['Gruntfile.js'],
