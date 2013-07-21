@@ -9,31 +9,27 @@
 
 (function ($) {
   $.fn.extend({ imageReveal: function (options) {
-    var dragging = false
-      , $el = {};
+    var $el = {};
 
-    // Extend default options with given options
-    options = $.extend({
+    // Merge passed in options with defaults
+    options = $.extend({}, {
         barWidth: 20
       , touchBarWidth: 60
-      , startPosition: 50
+      , startPosition: 0.5
       , paddingLeft: 0
       , paddingRight: 0
       , showCaption: false
       , captionChange: 0.5
       , width: 500
       , height: 500
+      , ids: []
     }, options);
 
-    // Detect touch devices and swap barWidth for touchBarWidth
-    if(!!('ontouchstart' in window) || !!('onmsgesturechange' in window)) {
-      options.barWidth = options.touchBarWidth;
-    }
+    options.ids = [];
 
     // Ensure startPosition is valid.
-    if(options.startPosition > (options.width - options.barWidth)) {
-      options.startPosition = options.width - options.barWidth;
-    } else if(options.startPosition < 0) options.startPosition = 0;
+    if(options.startPosition > 1) options.startPosition = 1;
+    else if(options.startPosition < 0) options.startPosition = 0;
 
     // Ensure captionChange is valid
     if(options.captionChange > 1) options.captionChange = 1;
@@ -41,11 +37,25 @@
 
     // Update - Moves the overlay and drag bar to the new location and displays the correct caption.
     function update(width, id) {
-      width = width - (options.barWidth / 2);
-      if(width > options.paddingLeft && width <= options.width - (options.paddingRight + options.barWidth)) {
-        $el[id].drag.css({ left: width });
-        $el[id].overlay.width(width);
-      }
+
+      // The width cannot be set lower than 0 or higher than options.width
+      if(width < 0) width = 0;
+      if(width > options.width) width = options.width;
+
+      // The width must not go outside any specified padding
+      if(width < options.paddingLeft) width = options.paddingLeft;
+      if(width > (options.width - options.paddingRight)) width = options.width - options.paddingRight;
+
+      // Apply new width
+      $el[id].overlay.width(width);
+
+      // The drag bar 'left' position should be set to (width - barWidth/2) so we always drag from the center.
+      var dragBarPosition = width - (options.barWidth / 2);
+      if(dragBarPosition < 0) dragBarPosition = 0;
+      if(dragBarPosition > options.width - options.barWidth) dragBarPosition = options.width - options.barWidth;
+      $el[id].drag.css({ left: dragBarPosition });
+
+      // The caption should be set when the given threshold is met
       if(options.showCaption) {
         if (width > options.width * options.captionChange) $el[id].caption.text($el[id].before.attr('title'));
         else $el[id].caption.text($el[id].after.attr('title'));
@@ -56,24 +66,40 @@
     function handleEvent(e) {
       var id = $(this).data('imageRevealID');
 
-      if(!dragging && e.type !== 'click') return false;
+      if(!$el[id].dragging && e.type !== 'click') return false;
       var position;
 
+      // If it was a touch event
       if(e.originalEvent && e.originalEvent.changedTouches) {
+
+        // Increase the bar width
+        if(!options.touchDevice) {
+          options.touchDevice = true;
+          options.originalBarWidth = options.barWidth;
+          options.barWidth = parseInt(options.touchBarWidth, 10);
+
+          $.each(options.ids, function(index, value) {
+            var dragBarPosition = $el[value].drag.position().left - ((options.touchBarWidth / 2) - (options.originalBarWidth / 2));
+            $el[value].drag.width(options.touchBarWidth).css({ left: dragBarPosition });
+          });
+        }
+        // Get position from touch event
         position = e.originalEvent.changedTouches[0].pageX;
-      } else position = e.pageX;
+      }
+      // Otherwise get position from mouse event
+      else {
+        position = e.pageX;
+      }
 
-      var offset = position - $el[id].overlay.offset().left;
 
-      if(offset < 0) offset = 0;
-      if(offset > options.width) offset = options.width;
-
-      update(offset, id);
+      // Call update with new width
+      update(position - $el[id].overlay.offset().left, id);
       return false;
     }
 
     return this.each(function (i) {
       $el[i] = {};
+      options.ids.push(i);
 
       // Container
       $el[i].container = $(this).addClass('imageReveal').data('imageRevealID', i);
@@ -120,31 +146,38 @@
             'background-image': 'url(' + $el[i].before.attr('src') + ')'
           , 'background-size': options.width + 'px ' + options.height + 'px'
         })
-        .animate({ width: options.width - options.startPosition - options.barWidth});
+        .animate({ width: options.width - (options.width * options.startPosition) });
 
       // Drag Bar
       $el[i].drag = $el[i].container.children('.imageReveal-drag')
         .width(options.barWidth)
         .height(options.height)
-        .animate({ right: options.startPosition })
+        .animate({ right: (options.width * options.startPosition) - (options.barWidth / 2) })
         .on('mousedown touchstart', function() {
-          dragging = true;
+          $el[i].dragging = true;
           $el[i].drag.addClass('dragging');
           return false;
         })
         .on('mouseup touchend touchcancel', function() {
-          dragging = false;
+          $el[i].dragging = false;
           $el[i].drag.removeClass('dragging');
           return false;
         });
 
-      // Catch mouseup on document as well, just in case the user
-      // drags outside the container.
-      $(document).mouseup(function() {
-        if(!dragging) return;
-
-        dragging = false;
+      // Catch mouseup on document for when the user
+      // releases the mouse button outside the container.
+      $(document).on('mouseup touchend touchcancel', function() {
+        if(!$el[i].dragging) return;
+        $el[i].dragging = false;
         $el[i].drag.removeClass('dragging');
+      });
+
+      // When the bar is dragged outside the container, immediately
+      // move it to the min or max position. This avoids the bar
+      // getting stuck when the mouse is moved too fast
+      $el[i].container.on('mouseout', function(e) {
+        if(!$el[i].dragging) return;
+        update(e.pageX - $el[i].overlay.offset().left, i);
       });
 
     }).on('mousemove click touchmove', handleEvent);
