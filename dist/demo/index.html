@@ -3,28 +3,106 @@
     <head>
         <title>jQuery Image Reveal</title>
         <script src="http://code.jquery.com/jquery-1.9.0.js"></script>
-        <script src="../jquery.imageReveal.min.js"></script>
+        <script src="../jquery.imageReveal.js"></script>
         <link rel="stylesheet" href="../jquery.imageReveal.min.css" />
+        <style>
+            .row { float: left; }
+            .imageReveal { margin-right: 20px; }
+            .row.small .imageReveal { display: inline-block; }
+            .row.small .imageReveal-caption { top: auto; bottom: 20px; }
+        </style>
     </head>
     <body>
 
-        <div class="imageReveal">
-            <img src="before.jpg" title="Before">
-            <img src="after.jpg" title="After">
+        <div class="row big">
+            <div id="example1" class="imageReveal">
+                <img src="images/1-before.jpg" title="Before">
+                <img src="images/1-after.jpg" title="After">
+            </div>
+        </div>
+
+        <div class="row small">
+            <div id="example2" class="imageReveal">
+                <img src="images/2-before.jpg" title="Before">
+                <img src="images/2-after.jpg" title="After">
+            </div>
+
+            <div id="example3" class="imageReveal">
+                <img src="images/3-before.jpg" title="Cute">
+                <img src="images/3-after.jpg" title="Evil">
+            </div>
+
+            <div id="example4" class="imageReveal">
+                <img src="images/4-before.jpg" title="Before">
+                <img src="images/4-after.jpg" title="After">
+            </div>
+        </div>
+
+        <div class="row small">
+            <div class="imageReveal example5">
+                <img src="before.jpg" title="Before">
+                <img src="after.jpg" title="After">
+            </div>
+
+            <div class="imageReveal example5">
+                <img src="before.jpg" title="Before">
+                <img src="after.jpg" title="After">
+            </div>
+
+            <div class="imageReveal example5">
+                <img src="before.jpg" title="Before">
+                <img src="after.jpg" title="After">
+            </div>
         </div>
 
         <script>
             $(window).load(function() {
-                $('.imageReveal').imageReveal({
-                    barwidth: 20,       // Controls the width of the drag-bar in pixels.
-                    touchBarWidth: 60,  // Controls the width of the drag-bar on touch devices in pixels.
-                    startPosition: 75,  // Controls the starting position, measured in pixels from the right side.
-                    paddingLeft: 0,     // Add padding to the left side in pixels.
-                    paddingRight: 0,    // Add padding to the right side in pixels.
-                    showCaption: true,  // Show a caption from the image 'title' attribute
-                    captionChange: 0.5, // How much of the image should be visible before changing captions? Number between 0 and 1 (0 = 0%, 0.5 = 50%, 1 = 100%, etc)
-                    width: 500,         // Width of the container (Images will be resized)
-                    height: 500         // Height of the container (Images will be resized)
+                $('#example1').imageReveal({
+                    barWidth: 15,
+                    touchBarWidth: 40,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    startPosition: 0.25,
+                    showCaption: true,
+                    captionChange: 0.5,
+                    width: 500,
+                    height: 500
+                });
+
+                $('#example2').imageReveal({
+                    barWidth: 15,
+                    touchBarWidth: 40,
+                    paddingLeft: 60,
+                    paddingRight: 60,
+                    showCaption: true,
+                    startPosition: 0.5,
+                    captionChange: 0.5,
+                    width: 250,
+                    height: 250
+                });
+
+                $('#example3, #example4').imageReveal({
+                    barWidth: 20,
+                    touchBarWidth: 40,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    showCaption: true,
+                    startPosition: 0.5,
+                    captionChange: 0.5,
+                    width: 250,
+                    height: 250
+                });
+
+                $('.example5').imageReveal({
+                    barWidth: 15,
+                    touchBarWidth: 40,
+                    paddingLeft: 0,
+                    paddingRight: 0,
+                    showCaption: true,
+                    startPosition: 0.5,
+                    captionChange: 0.5,
+                    width: 250,
+                    height: 250
                 });
             });
         </script>
