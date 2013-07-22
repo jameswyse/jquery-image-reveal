@@ -1,6 +1,5 @@
-jQuery Image Reveal
+jQuery Image Reveal <img src="https://travis-ci.org/lemoncreative/jquery-image-reveal.png?branch=master" align="right">
 ===================
-
 A small jQuery plugin to display before/after style photos.
 
 # Usage
