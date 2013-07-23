@@ -57,8 +57,16 @@
 
       // The caption should be set when the given threshold is met
       if(options.showCaption) {
-        if (width > options.width * options.captionChange) $el[id].caption.text($el[id].before.attr('title'));
-        else $el[id].caption.text($el[id].after.attr('title'));
+        var beforeCaption = $el[id].before.attr('title'),
+            afterCaption = $el[id].after.attr('title');
+        if (width > options.width * options.captionChange) {
+          if(beforeCaption && beforeCaption !== '') $el[id].caption.text(beforeCaption).show();
+          else $el[id].caption.hide();
+        }
+        else {
+          if(afterCaption && afterCaption !== '') $el[id].caption.text(afterCaption).show();
+          else $el[id].caption.hide();
+        }
       }
     }
 
@@ -136,7 +144,7 @@
         });
 
       // Caption
-      $el[i].caption = options.showCaption ? $el[i].container.children('.imageReveal-caption').show() : $el[i].container.children('.imageReveal-caption').hide();
+      $el[i].caption = (options.showCaption && $el[i].before.attr('title') && $el[i].before.attr('title') !== '') ? $el[i].container.children('.imageReveal-caption').show() : $el[i].container.children('.imageReveal-caption').hide();
 
       // Overlay
       $el[i].overlay = $el[i].container.children('.imageReveal-overlay')
