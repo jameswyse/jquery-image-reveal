@@ -158,7 +158,7 @@
           .css('cursor', 'pointer')
           .data('link', $el[i].before.data('link'))
           .on('click', function() {
-            window.location = $el[i].caption.data('link');
+            if($el[i].caption.data('link')) window.location = $el[i].caption.data('link');
             return false;
           });
       }
