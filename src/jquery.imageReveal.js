@@ -62,15 +62,19 @@
             afterCaption = $el[id].after.attr('title');
 
         if (width > options.width * options.captionChange) {
-          if(beforeCaption && beforeCaption !== '') $el[id].caption.text(beforeCaption).show().data('link', $el[id].before.data('link'));
-          else $el[id].caption.hide();
+          if(beforeCaption && beforeCaption !== '') {
+            $el[id].caption.text(beforeCaption).fadeIn(options.captionFade || 1000).data('link', $el[id].before.data('link'));
+          }
+          else $el[id].caption.fadeOut(options.captionFade || 1000);
         }
         else {
-          if(afterCaption && afterCaption !== '') $el[id].caption.text(afterCaption).show().data('link', $el[id].after.data('link'));
-          else $el[id].caption.hide();
+          if(afterCaption && afterCaption !== '') {
+            $el[id].caption.text(afterCaption).fadeIn(options.captionFade || 1000).data('link', $el[id].after.data('link'));
+          }
+          else $el[id].caption.fadeOut(options.captionFade || 1000);
         }
-
       }
+
     }
 
     // handleEvent - Calls 'update' if the event is valid
