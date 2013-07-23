@@ -19,6 +19,7 @@
       , paddingLeft: 0
       , paddingRight: 0
       , showCaption: false
+      , linkCaption: false
       , captionChange: 0.5
       , width: 500
       , height: 500
@@ -59,14 +60,16 @@
       if(options.showCaption) {
         var beforeCaption = $el[id].before.attr('title'),
             afterCaption = $el[id].after.attr('title');
+
         if (width > options.width * options.captionChange) {
-          if(beforeCaption && beforeCaption !== '') $el[id].caption.text(beforeCaption).show();
+          if(beforeCaption && beforeCaption !== '') $el[id].caption.text(beforeCaption).show().data('link', $el[id].before.data('link'));
           else $el[id].caption.hide();
         }
         else {
-          if(afterCaption && afterCaption !== '') $el[id].caption.text(afterCaption).show();
+          if(afterCaption && afterCaption !== '') $el[id].caption.text(afterCaption).show().data('link', $el[id].after.data('link'));
           else $el[id].caption.hide();
         }
+
       }
     }
 
@@ -144,7 +147,21 @@
         });
 
       // Caption
-      $el[i].caption = (options.showCaption && $el[i].before.attr('title') && $el[i].before.attr('title') !== '') ? $el[i].container.children('.imageReveal-caption').show() : $el[i].container.children('.imageReveal-caption').hide();
+      $el[i].caption = $el[i].container.children('.imageReveal-caption');
+
+      if(options.showCaption && $el[i].before.attr('title') && $el[i].before.attr('title') !== '') {
+        $el[i].caption.show();
+      } else $el[i].caption.hide();
+
+      if(options.linkCaption) {
+        $el[i].caption
+          .css('cursor', 'pointer')
+          .data('link', $el[i].before.data('link'))
+          .on('click', function() {
+            window.location = $el[i].caption.data('link');
+            return false;
+          });
+      }
 
       // Overlay
       $el[i].overlay = $el[i].container.children('.imageReveal-overlay')
