@@ -1,10 +1,10 @@
 {
   "name": "jquery-image-reveal",
   "description": "jQuery Image Reveal - A Simple Before/After Image Viewer",
-  "version": "0.1.9",
-  "homepage": "http://github.com/lemoncreative/jquery-image-reveal",
+  "version": "0.1.10",
+  "homepage": "http://github.com/jameswyse/jquery-image-reveal",
   "author": {
-    "name": "Lemon Creative",
+    "name": "James Wyse",
     "url": "http://www.lemoncreative.net",
     "email": "hello@lemoncreative.net"
   },
@@ -17,15 +17,15 @@
   "licenses": [
     {
       "type": "MIT",
-      "url": "http://github.com/lemoncreative/jquery-image-reveal/blob/master/LICENSE-MIT"
+      "url": "http://github.com/jameswyse/jquery-image-reveal/blob/master/LICENSE-MIT"
     }
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/lemoncreative/jquery-image-reveal.git"
+    "url": "https://github.com/jameswyse/jquery-image-reveal.git"
   },
   "bugs": {
-    "url": "http://github.com/lemoncreative/jquery-image-reveal/issues"
+    "url": "http://github.com/jameswyse/jquery-image-reveal/issues"
   },
   "keywords": [
     "jquery",
@@ -45,7 +45,8 @@
   "engines": {
     "node": ">= 0.8.0"
   },
-  "dependencies": {
+  "dependencies": {},
+  "devDependencies": {
     "grunt": "~0.4.1",
     "grunt-contrib-uglify": "~0.2.2",
     "grunt-contrib-cssmin": "~0.6.1",
