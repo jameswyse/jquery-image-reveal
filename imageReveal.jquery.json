@@ -1,6 +1,6 @@
 {
   "name": "imageReveal",
-  "version": "0.1.9",
+  "version": "0.1.10",
   "title": "jQuery Image Reveal",
   "description": "A Simple Before/After Image Viewer",
   "keywords": [
@@ -12,19 +12,19 @@
     "slider"
   ],
   "author": {
-    "name": "Lemon Creative",
+    "name": "James Wyse",
     "email": "hello@lemoncreative.net",
     "url": "http://www.lemoncreative.net"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/lemoncreative/jquery-image-reveal/blob/master/LICENSE-MIT"
+      "url": "https://github.com/jameswyse/jquery-image-reveal/blob/master/LICENSE.md"
     }
   ],
-  "bugs": "https://github.com/lemoncreative/jquery-image-reveal/issues",
-  "homepage": "https://github.com/lemoncreative/jquery-image-reveal",
-  "docs": "https://github.com/lemoncreative/jquery-image-reveal",
+  "bugs": "https://github.com/jameswyse/jquery-image-reveal/issues",
+  "homepage": "https://github.com/jameswyse/jquery-image-reveal",
+  "docs": "https://github.com/jameswyse/jquery-image-reveal",
   "dependencies": {
     "jquery": ">=1.8.0"
   }

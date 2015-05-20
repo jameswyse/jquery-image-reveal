@@ -1,10 +1,10 @@
-jQuery Image Reveal <img src="https://travis-ci.org/lemoncreative/jquery-image-reveal.png?branch=master" align="right">
+jQuery Image Reveal <img src="https://travis-ci.org/jameswyse/jquery-image-reveal.png?branch=master" align="right">
 ===================
 A small jQuery plugin to display before/after style photos.
 
 # Usage
 
-See [dist/demo/](https://github.com/lemoncreative/jquery-image-reveal/blob/master/dist/demo) for example usage.
+See [dist/demo/](https://github.com/jameswyse/jquery-image-reveal/blob/master/dist/demo) for example usage.
 
 # Development
 
@@ -13,7 +13,7 @@ See [dist/demo/](https://github.com/lemoncreative/jquery-image-reveal/blob/maste
 # Setting Up:
 
 $ npm install -g grunt-cli
-$ git clone https://github.com/lemoncreative/jquery-image-reveal.git
+$ git clone https://github.com/jameswyse/jquery-image-reveal.git
 $ cd jquery-image-reveal
 $ npm install
 
@@ -27,3 +27,6 @@ $ grunt release
 $ grunt
 ```
 
+# License
+
+MIT.
